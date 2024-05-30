@@ -15,4 +15,8 @@
         VALUE
         (#{memoText})
     </insert>
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM tbl_Memo
+        ;
+    </select>
 </mapper>
