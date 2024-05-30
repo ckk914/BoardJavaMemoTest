@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.mvc.mapper.MemoMapper">
+
+<!--    전체 메모 조회 -->
+    <select id="findAll" resultType="com.test.mvc.entity.Memo">
+        SELECT * FROM tbl_Memo
+        ;
+    </select>
+    <insert id="save">
+        INSERT INTO tbl_memo
+        (memoText)
+        VALUE
+        (#{memoText})
+    </insert>
+</mapper>
