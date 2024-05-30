@@ -11,10 +11,13 @@
     <!--    select 조회 결과를 담을 Entity 클래스 별칭 설정하기⭐️-->
     <typeAliases>
 <!--        <typeAlias type="com.study.SpringStudy.springmvc.chap05.entity.Member" alias="member"/>-->
+        <typeAlias type="com.test.mvc.entity.Memo" alias="memo"/>
+
     </typeAliases>
     <!--    SQL을 적어놓은 ... Mapper.xml 파일들을 사용등록하는 영역-->
     <!--다른 xml 생기면 하단에 계속 추가⭐️-->
     <mappers>
 <!--        <mapper resource="mappers/PersonMapper.xml"/>-->
+        <mapper resource="mappers/MemoMapper.xml"/>
     </mappers>
 </configuration>
