@@ -14,5 +14,6 @@ public interface MemoMapper {
 //    Memo findOne(int memoNum);
 //    //메모 등록
     boolean save(MemoPostDto memo);
-
+    //메모 갯수 조회
+    int count();
 }
