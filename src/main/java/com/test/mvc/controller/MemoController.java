@@ -41,13 +41,14 @@ public class MemoController {
         System.out.println("memo = " + memoPostDto);
         boolean flag = memoService.save(memoPostDto);
         
-        int count = memoService.count();
-        System.out.println("count = " + count);
-//        model.addAttribute("totalCnt",)
-                
+//        int count = memoService.count();
+//        System.out.println("count = " + count);
+//model.addAttribute("totalCount",count);
+        List<Memo> mmLists = memoService.findList();
+                //돌려줄 데이터
         return ResponseEntity
                 .ok()
-                .body(memoPostDto);
+                .body(mmLists);
     }
 
     

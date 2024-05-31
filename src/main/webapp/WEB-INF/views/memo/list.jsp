@@ -157,27 +157,29 @@
         font-size: 24px;
         font-weight: bold;
       ">
-                Memo List
+                Memo List ${totalCount}
             </div>
-            <c:if test="${mList.size() > 0}">
-                <c:forEach var="memo" items="${mList}">
-                    <div class="memo-wrapper">
-                        <section class="card" data-mno="${memo.memoNum}">
-                            <div class="card-content">${memo.memoText}</div>
-                            <div class="card-time">등록시간: ${memo.regDate}</div>
-                            <div class="card-buttons">
-                                <button class="edit-btn">수정</button>
-                                <button class="delete-btn">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </div>
-                        </section>
-                    </div>
-                </c:forEach>
-            </c:if>
+            <div class="memo-total-List">
+                <c:if test="${mList.size() > 0}">
+                    <c:forEach var="memo" items="${mList}">
+                        <div class="memo-wrapper">
+                            <section class="card" data-mno="${memo.memoNum}">
+                                <div class="card-content">${memo.memoText}</div>
+                                <div class="card-time">등록시간: ${memo.regDate}</div>
+                                <div class="card-buttons">
+                                    <button class="edit-btn">수정</button>
+                                    <button class="delete-btn">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </section>
+                        </div>
+                    </c:forEach>
+                </c:if>
+            </div>
             <button class="add-memo-btn">Add Memo</button>
             <form class="add-memo-form">
-                <textarea placeholder="Enter your memo"></textarea>
+                <textarea class="ta" placeholder="Enter your memo"></textarea>
                 <button class="saveBtn" type="submit">Save</button>
             </form>
 
@@ -195,13 +197,13 @@
                 });
 
                 const fetchMemoPost = async () => {
-                    console.log(`11`);
+                    // console.log(`11`);
                     // 서버로 보낼 데이터
                     const payload = {
                         memoText: document.querySelector(".add-memo-form textarea").value,
                     };
                     console.log("payload" + payload);
-                    console.log(`22`);
+                    // console.log(`22`);
                     const res = await fetch(`${BASE_URL}`, {
                         method: "POST",
                         headers: {
@@ -210,7 +212,13 @@
                         body: JSON.stringify(payload),
                     });
 
-                    const replies = await res.json();
+                    const replies = await res.json();  //받는 것 (json 타입)
+                    console.log(replies);
+                    document.querySelector(".ta").value = null;           //
+                    GetAllReplies(replies);    //최신화
+                    // console.log(replies.length);
+
+
                 };
                 //제출
                 document
@@ -225,11 +233,47 @@
 
                         await fetchMemoPost();
                         //
-                        console.log("New memo:", memotext);
                         document.querySelector(".add-memo-form").style.display = "none";
-
-
                     });
+                // 가져올 함수
+                function GetAllReplies(replies) {   //객체 안의 replies 였다면{replies} 로 받아야함.
+                    // 댓글 목록 렌더링
+                    let tag = "";
+                    // replies가 null이 아니거나 0보다 클때
+                    // console.log(`start`);
+                    // console.log(replies);
+                    // console.log(`start2`);
+                    // console.log({ replies });
+                    if (replies && replies.length > 0) {
+                        // reply_no: rno  => reply_no를 rno로 받아서 처리하겠다.
+                        replies.forEach(({ memoNum, memoText, regDate }) => {
+                            // console.log(memoNum + " " + memoText + " " + regDate)
+                            tag += `
+            <div class="memo-wrapper">
+                        <section class="card" data-mno=\${memoNum}>
+                            <div class="card-content">\${memoText}</div>
+                            <div class="card-time">등록시간: \${regDate}</div>
+                            <div class="card-buttons">
+                                <button class="edit-btn">수정</button>
+                                <button class="delete-btn">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </section>
+                    </div>
+            `;
+
+                        });
+                    } else {
+                        console.log('메모가 없습니다.');
+                    }
+
+                    console.log('tag=' + tag);
+                    console.log('query=' + document.querySelector(".memo-total-List").innerHTML);
+                    document.querySelector(".memo-total-List").innerHTML = tag; //전체 태그 교체 부분
+                    // 로드된 댓글 수 업데이트
+                    // loadedReplies += replies.length;
+                }
 
             </script>
         </body>

@@ -7,7 +7,7 @@
 <!--    전체 메모 조회 -->
     <select id="findAll" resultType="com.test.mvc.entity.Memo">
         SELECT * FROM tbl_Memo
-        ;
+        
     </select>
     <insert id="save">
         INSERT INTO tbl_memo
@@ -17,6 +17,6 @@
     </insert>
     <select id="count" resultType="int">
         SELECT COUNT(*) FROM tbl_Memo
-        ;
+        
     </select>
 </mapper>
