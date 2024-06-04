@@ -26,4 +26,16 @@ class MemoMapperTest {
                 .build());
         //then
     }
+
+    @Test
+    @DisplayName("test delete")
+    void deleteTest() {
+        //given
+        long a = 10;
+        //when
+        boolean delete = memoMapper.delete(a);
+        //then
+        if(delete)
+        System.out.println("delete =ok삭제 " + delete);
+    }
 }
