@@ -17,6 +17,10 @@
     </insert>
     <select id="count" resultType="int">
         SELECT COUNT(*) FROM tbl_Memo
-        
     </select>
+    <delete id="delete">
+        DELETE FROM tbl_Memo
+        WHERE memonum = #{memoNum}
+    </delete>
+
 </mapper>

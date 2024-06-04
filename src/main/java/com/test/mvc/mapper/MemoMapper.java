@@ -16,4 +16,6 @@ public interface MemoMapper {
     boolean save(MemoPostDto memo);
     //메모 갯수 조회
     int count();
+    //메모 삭제
+    boolean delete(long memoNum);
 }
