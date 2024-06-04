@@ -21,35 +21,48 @@ import java.util.List;
 public class MemoController {
     //서비스 통해 위임하여 조회나 기타등등
     private final MemoService memoService;
-    
+
     @GetMapping("/")
-    public String list(Model model){
+    public String list(Model model) {
+//        System.out.println("/ getMapping");
         List<Memo> memo = memoService.findList();
         System.out.println("memo = " + memo);
 
-        model.addAttribute("mList",memo);
+        model.addAttribute("mList", memo);
         return "/memo/list";
     }
 
     @PostMapping
     public ResponseEntity<?> post(
-            @RequestBody MemoPostDto memoPostDto,Model model
-            ){
+            @RequestBody MemoPostDto memoPostDto, Model model
+    ) {
         System.out.println(" 추가시퀀스 진입");
         log.info("/api/vi/replies: post");
         log.debug("parameter: {}", memoPostDto);
         System.out.println("memo = " + memoPostDto);
         boolean flag = memoService.save(memoPostDto);
-        
+
 //        int count = memoService.count();
 //        System.out.println("count = " + count);
 //model.addAttribute("totalCount",count);
         List<Memo> mmLists = memoService.findList();
-                //돌려줄 데이터
+        //돌려줄 데이터
         return ResponseEntity
                 .ok()
                 .body(mmLists);
     }
 
-    
-}
+    //삭제 처리 method: delete
+    @DeleteMapping("/{mno}")
+    public ResponseEntity<?> delete(@PathVariable long mno) { //PathVariable : url 데이터 읽음~!
+
+//        System.out.println("삭제 시퀀스");
+        System.out.println("mno = " + mno);
+        List<Memo> mList = memoService.delete(mno);
+        return ResponseEntity
+                .ok()
+                .body(mList);
+    }
+
+
+} //end MemoController
