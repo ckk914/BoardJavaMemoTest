@@ -6,6 +6,7 @@ import com.test.mvc.mapper.MemoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,6 +35,22 @@ public class MemoService {
        int count = memoMapper.count();
        return count;
    }
+
+   //메모 삭제
+    @Transactional
+    public List<Memo> delete(long mno){
+        boolean flag = memoMapper.delete(mno);
+        System.out.println("flag = " + flag);
+        List<Memo> mList = memoMapper.findAll();
+        if(flag){
+
+            System.out.println("mList = " + mList);
+            
+            return mList;
+        }
+        else return mList;
+
+    }
 
 
 }
