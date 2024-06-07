@@ -294,14 +294,19 @@
             console.log(mno);
             fetchDeleteMemo(mno); //삭제 호출.!
           }
-          else if ((e.target.classList.contains(`edit-btn`))) {  //수정
+          else if ((e.target.classList.contains(`edit-btn`))) {  //# 수정
             // console.log("수정 클릭!!");
             const $card = e.target.closest(`.card`);
+            const $firstChild = $card.firstElementChild;
             const mno = $card.dataset.mno;
-            const content = $mno.firstElementChild.content;
+            // const content = $mno.firstElementChild.content;
 
             console.log(mno);
-            console.log(content);
+            // console.log($card);
+            console.log($firstChild);
+            var newSpan = document.createElement('textarea');
+            newSpan.textContent = $firstChild.textContent;
+            $firstChild.parentNode.replaceChild(newSpan, $firstChild);
 
           }
         });
