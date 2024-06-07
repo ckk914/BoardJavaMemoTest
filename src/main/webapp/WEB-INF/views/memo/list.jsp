@@ -276,7 +276,9 @@
         //     console.log(`삭제 클릭`);
         // });
 
-        //삭제 버튼 클릭!!
+
+        // # 삭제 #  
+
         // const deleteBtns = document.querySelectorAll(".delete-btn");
 
         // deleteBtns.forEach((btn) => {
@@ -286,19 +288,28 @@
 
           // console.log('dd  ' + e.target.classList.contains(`fa-trash-alt`));
           console.log(e.target.classList);
-          if (!(e.target.classList.contains(`fa-trash-alt`) || e.target.classList.contains(`delete-btn`))) return;
-          // 각 버튼에 대한 처리 로직 작성
-          const mno = e.target.closest(`.card`).dataset.mno;
-          console.log(mno);
-          fetchDeleteMemo(mno); //삭제 호출.!
+          if ((e.target.classList.contains(`fa-trash-alt`) || e.target.classList.contains(`delete-btn`))) {
+            // 각 버튼에 대한 처리 로직 작성
+            const mno = e.target.closest(`.card`).dataset.mno;
+            console.log(mno);
+            fetchDeleteMemo(mno); //삭제 호출.!
+          }
+          else if ((e.target.classList.contains(`edit-btn`))) {  //수정
+            // console.log("수정 클릭!!");
+            const $card = e.target.closest(`.card`);
+            const mno = $card.dataset.mno;
+            const content = $mno.firstElementChild.content;
+
+            console.log(mno);
+            console.log(content);
+
+          }
         });
         // });
         const url = `http://localhost:8383`;
 
         const fetchDeleteMemo = async (mno) => {
           const url2 = url + "/" + mno;
-          console.log("mno" + mno);
-          console.log("ASDASD" + url2);
           const res = await fetch(`\${url2}`, {
             method: `DELETE`,
           });
