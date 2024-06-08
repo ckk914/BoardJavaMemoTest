@@ -148,6 +148,15 @@
           margin-right: 4px;
           /* 아이콘과 텍스트 사이 여백 추가 */
         }
+
+        .edit-btn i {
+          font-size: 16px;
+          color: white;
+        }
+
+        .edit-btn i {
+          margin-right: 4px;
+        }
       </style>
     </head>
 
@@ -168,7 +177,9 @@
                 <div class="card-content">${memo.memoText}</div>
                 <div class="card-time">등록시간: ${memo.regDate}</div>
                 <div class="card-buttons">
-                  <button class="edit-btn">수정</button>
+                  <button class="edit-btn">
+                    <i class="fas fa-pencil-alt"></i>
+                  </button>
                   <button class="delete-btn">
                     <i class="fas fa-trash-alt"></i>
                   </button>
@@ -250,7 +261,9 @@
                             <div class="card-content">\${memoText}</div>
                             <div class="card-time">등록시간: \${regDate}</div>
                             <div class="card-buttons">
-                                <button class="edit-btn">수정</button>
+                                <button class="edit-btn">
+                             <i class="fas fa-pencil-alt"></i>
+                                  </button>
                                 <button class="delete-btn">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
@@ -287,26 +300,39 @@
           e.preventDefault();
 
           // console.log('dd  ' + e.target.classList.contains(`fa-trash-alt`));
-          console.log(e.target.classList);
+          console.log('click=>', e.target.classList);
           if ((e.target.classList.contains(`fa-trash-alt`) || e.target.classList.contains(`delete-btn`))) {
             // 각 버튼에 대한 처리 로직 작성
             const mno = e.target.closest(`.card`).dataset.mno;
             console.log(mno);
             fetchDeleteMemo(mno); //삭제 호출.!
           }
-          else if ((e.target.classList.contains(`edit-btn`))) {  //# 수정
+          else if ((e.target.classList.contains(`edit-btn`) || e.target.classList.contains(`fa-pencil-alt`))) {  //# 수정
             // console.log("수정 클릭!!");
-            const $card = e.target.closest(`.card`);
-            const $firstChild = $card.firstElementChild;
-            const mno = $card.dataset.mno;
-            // const content = $mno.firstElementChild.content;
 
-            console.log(mno);
-            // console.log($card);
-            console.log($firstChild);
-            var newSpan = document.createElement('textarea');
-            newSpan.textContent = $firstChild.textContent;
-            $firstChild.parentNode.replaceChild(newSpan, $firstChild);
+            if ((e.target.classList.contains(`edit-btn`) || e.target.classList.contains(`fa-pencil-alt`))) {
+              const $card = e.target.closest(`.card`);
+              const $firstChild = $card.firstElementChild;
+              console.log('card=>', $card);
+              $test = $card.children[2];
+              const $cardButtons = $card.closest(`.card-buttons`);
+              console.log('cb=>', $test);
+              // const $editBtn = $cardButtons.closest(`.edit-btn`);
+              // console.log('sss=>', $editBtn);
+              const mno = $card.dataset.mno;
+              // const content = $mno.firstElementChild.content;
+              // console.log(e.target.classList);
+              console.log(mno);
+              // console.log($card);
+              console.log($firstChild);
+              var newSpan = document.createElement('textarea');
+              newSpan.classList.add('card-content');
+              newSpan.textContent = $firstChild.textContent;
+              $firstChild.parentNode.replaceChild(newSpan, $firstChild);
+
+            }
+
+
 
           }
         });
