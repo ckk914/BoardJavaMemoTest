@@ -23,4 +23,9 @@
         WHERE memonum = #{memoNum}
     </delete>
 
+    <update id="modify">
+        UPDATE tbl_memo
+        SET memoText = #{newText}
+        WHERE memonum = #{mno}
+    </update>
 </mapper>

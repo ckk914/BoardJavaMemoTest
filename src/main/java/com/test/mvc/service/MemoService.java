@@ -1,5 +1,6 @@
 package com.test.mvc.service;
 
+import com.test.mvc.dto.MemoModifyDto;
 import com.test.mvc.dto.MemoPostDto;
 import com.test.mvc.entity.Memo;
 import com.test.mvc.mapper.MemoMapper;
@@ -17,7 +18,22 @@ public class MemoService {
     //매퍼 통해서 끌어오기
    private final MemoMapper memoMapper;
 
-   public List<Memo> findList(){
+    public List<Memo> modify(MemoModifyDto dto) {
+        boolean flag = memoMapper.modify(dto);
+
+        List<Memo> mList = memoMapper.findAll();
+        if(flag){
+
+            System.out.println("mList = " + mList);
+
+            return mList;
+        }
+         return mList;
+
+    }
+
+
+    public List<Memo> findList(){
        List<Memo> memoList = memoMapper.findAll();
 
        return memoList;

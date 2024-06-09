@@ -1,5 +1,6 @@
 package com.test.mvc.mapper;
 
+import com.test.mvc.dto.MemoModifyDto;
 import com.test.mvc.dto.MemoPostDto;
 import com.test.mvc.entity.Memo;
 import org.apache.ibatis.annotations.Mapper;
@@ -18,4 +19,6 @@ public interface MemoMapper {
     int count();
     //메모 삭제
     boolean delete(long memoNum);
+    //메모 수정
+    boolean modify(MemoModifyDto memo);
 }
