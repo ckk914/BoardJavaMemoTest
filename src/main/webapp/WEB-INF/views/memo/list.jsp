@@ -6,11 +6,18 @@
     <head>
       <meta charset="UTF-8" />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-      <link rel="icon" href="https://img.icons8.com/?size=100&id=JWpT8cAn8G0V&format=png&color=000000">
+      <link rel="icon" href="https://img.icons8.com/?size=100&id=JWpT8cAn8G0V&format=png&color=000000" />
+
+      <!-- font -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+
       <title>Memo List</title>
       <style>
         body {
-          font-family: Arial, sans-serif;
+          /* font-family: Arial, sans-serif; */
+          font-family: 'Black Han Sans', sans-serif;
           background-color: #f2f2f2;
           margin: 0;
           padding: 0;
@@ -167,7 +174,7 @@
         font-size: 24px;
         font-weight: bold;
       ">
-        Memo List ${totalCount}
+        Memo List ⟦<span style="color: rgb(97, 164, 14);" font-weight:400;>${mList.size()}</span>⟧
       </div>
       <div class="memo-total-List">
         <c:if test="${mList.size() > 0}">
@@ -176,6 +183,7 @@
               <section class="card" data-mno="${memo.memoNum}">
                 <div class="card-content">${memo.memoText}</div>
                 <div class="card-time">등록시간: ${memo.regDate}</div>
+
                 <div class="card-buttons">
                   <button class="edit-btn">
                     <i class="fas fa-pencil-alt"></i>
@@ -289,56 +297,100 @@
         //     console.log(`삭제 클릭`);
         // });
 
-
-        // # 삭제 #  
+        // # 삭제 #
 
         // const deleteBtns = document.querySelectorAll(".delete-btn");
 
         // deleteBtns.forEach((btn) => {
         //랜더링 문제 없게 반복되지 않는 곳에 클릭을 걸어준다.
-        document.querySelector('.memo-total-List').addEventListener("click", async (e) => {
-          e.preventDefault();
+        document
+          .querySelector(".memo-total-List")
+          .addEventListener("click", async (e) => {
+            e.preventDefault();
 
-          // console.log('dd  ' + e.target.classList.contains(`fa-trash-alt`));
-          console.log('click=>', e.target.classList);
-          if ((e.target.classList.contains(`fa-trash-alt`) || e.target.classList.contains(`delete-btn`))) {
-            // 각 버튼에 대한 처리 로직 작성
-            const mno = e.target.closest(`.card`).dataset.mno;
-            console.log(mno);
-            fetchDeleteMemo(mno); //삭제 호출.!
-          }
-          else if ((e.target.classList.contains(`edit-btn`) || e.target.classList.contains(`fa-pencil-alt`))) {  //# 수정
-            // console.log("수정 클릭!!");
+            // console.log('dd  ' + e.target.classList.contains(`fa-trash-alt`));
+            console.log("click=>", e.target.classList);
 
-            if ((e.target.classList.contains(`edit-btn`) || e.target.classList.contains(`fa-pencil-alt`))) {
-              const $card = e.target.closest(`.card`);
-              const $firstChild = $card.firstElementChild;
-              console.log('card=>', $card);
-              $test = $card.children[2];
-              const $cardButtons = $card.closest(`.card-buttons`);
-              console.log('cb=>', $test);
-              // const $editBtn = $cardButtons.closest(`.edit-btn`);
-              // console.log('sss=>', $editBtn);
-              const mno = $card.dataset.mno;
-              // const content = $mno.firstElementChild.content;
-              // console.log(e.target.classList);
+            if (
+              e.target.classList.contains(`fa-trash-alt`) ||
+              e.target.classList.contains(`delete-btn`)
+            ) {
+              // 각 버튼에 대한 처리 로직 작성
+              const mno = e.target.closest(`.card`).dataset.mno;
               console.log(mno);
-              // console.log($card);
-              console.log($firstChild);
-              var newSpan = document.createElement('textarea');
-              newSpan.classList.add('card-content');
-              newSpan.textContent = $firstChild.textContent;
-              $firstChild.parentNode.replaceChild(newSpan, $firstChild);
+              fetchDeleteMemo(mno); //삭제 호출.!
+            } else if (
+              e.target.classList.contains(`edit-btn`) ||
+              e.target.classList.contains(`fa-pencil-alt`) ||
+              e.target.classList.contains(`fa-check`)
+            ) {
+              //# 수정
+              // console.log("수정 클릭!!");
 
+              if (
+                e.target.classList.contains(`edit-btn`) ||
+                e.target.classList.contains(`fas`)
+              ) {
+                const $card = e.target.closest(`.card`);
+
+                const $cardFirstChild = $card.firstElementChild;
+                console.log("card=>", $card);
+                const $cardButtons = $card.children[2];
+                console.log("cb=>", $cardButtons);
+                const $editButton = $cardButtons.children[0];
+                console.log($editButton);
+
+                const $icon = $editButton.children[0];
+
+                if ($icon.classList.contains("fa-pencil-alt")) {
+                  //아이콘 변경
+                  $icon.classList.remove("fa-pencil-alt");
+                  $icon.classList.add("fa-check");
+                  // 태그 변경
+                  console.log($cardFirstChild);
+                  var newSpan = document.createElement("textarea");
+                  newSpan.classList.add("card-content");
+                  newSpan.textContent = $cardFirstChild.textContent;
+                  $cardFirstChild.parentNode.replaceChild(
+                    newSpan,
+                    $cardFirstChild
+                  );
+                } else if ($icon.classList.contains("fa-check")) {
+                  console.log("저장 ㄱ");
+                  $icon.classList.remove("fa-check");
+                  $icon.classList.add("fa-pencil-alt");
+
+                  //UI 업데이트
+                  const $cardFirstChild2 = $card.firstElementChild;
+                  var newSpan = document.createElement("div");
+                  newSpan.classList.add("card-content");
+                  newSpan.textContent = $cardFirstChild2.value;
+                  console.log("바꿀내용:", $cardFirstChild2.value);
+                  $cardFirstChild2.parentNode.replaceChild(
+                    newSpan,
+                    $cardFirstChild2
+                  );
+
+                  //db 처리를 위한 넘버 소환!
+                  const mno = $card.dataset.mno;
+                  console.log(mno);
+                  const newText = $cardFirstChild2.value;
+                  fetchModifyMemo(mno, newText);
+                }
+
+                // console.log('editList=>', $icon.classList);
+                // const $editBtn = $cardButtons.closest(`.edit-btn`);
+                // console.log('sss=>', $editBtn);
+                // const content = $mno.firstElementChild.content;
+                // console.log(e.target.classList);
+                // console.log($card);
+              }
             }
-
-
-
-          }
-        });
+          });
         // });
-        const url = `http://localhost:8383`;
 
+        const url = `http://localhost:8383`;
+        //# 삭제
         const fetchDeleteMemo = async (mno) => {
           const url2 = url + "/" + mno;
           const res = await fetch(`\${url2}`, {
@@ -354,6 +406,28 @@
           GetAllReplies(responseData); //최신화
         };
 
+        // # 수정
+        const fetchModifyMemo = async (mno, newText) => {
+          const payload = {
+            mno: mno,
+            newText: newText,
+          };
+          console.log("payload", payload);
+          console.log("url", url);
+          const res = await fetch(url, {
+            method: "PUT",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          });
+
+          if (res.status === 403) {
+            alert("로그인이 필요한 서비스입니다.");
+            // window.location.href = '/members/sign-in';
+            return;
+          }
+        };
       </script>
     </body>
 
