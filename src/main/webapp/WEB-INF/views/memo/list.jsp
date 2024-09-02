@@ -39,12 +39,19 @@
         }
 
         .card-content {
-          font-size: 16px;
-          line-height: 1.5;
-          margin-bottom: 10px;
+                     width: 91%;
+                   padding: 12px 16px;
+                   border-radius: 8px;
+                   resize: none;
+                   color: #212121;
+                   height: 96px;
+                   border: 1px solid #414141;
+                   background-color: transparent;
+                   font-family: inherit;
         }
 
         .card-time {
+            padding-top: 8px;
           font-size: 14px;
           color: #888;
         }
@@ -80,13 +87,22 @@
         }
 
         .add-memo-form textarea {
-          width: 100%;
+          <%-- width: 100%;
           height: 100px;
           font-size: 16px;
           padding: 10px;
           border: 1px solid #ccc;
           border-radius: 4px;
+          resize: none; --%>
+          width: 100%;
+          padding: 12px 16px;
+          border-radius: 8px;
           resize: none;
+          color: #4d8350;
+          height: 96px;
+          border: 1px solid #414141;
+          background-color: transparent;
+          font-family: inherit;
         }
 
         .add-memo-form button {
