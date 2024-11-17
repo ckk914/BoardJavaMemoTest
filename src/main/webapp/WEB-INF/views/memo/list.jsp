@@ -44,8 +44,8 @@
                    border-radius: 8px;
                    resize: none;
                    color: #212121;
-                   height: 96px;
-                   border: 1px solid #414141;
+                   <%-- height: 96px; --%>
+                  <%-- border: 1px solid #414141; --%>
                    background-color: transparent;
                    font-family: inherit;
         }
@@ -180,10 +180,23 @@
         .edit-btn i {
           margin-right: 4px;
         }
+
+        #toggleMode:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+            transition: all 0.2s ease-in-out;
+        }
+
+        #toggleMode i {
+            margin-right: 5px;
+        }
       </style>
     </head>
 
     <body>
+        <button id="toggleMode" style="position: fixed; top: 20px; right: 20px; z-index: 1000; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; background-color: #4caf50; color: white;">
+            <i class="fas fa-moon"></i> 다크모드
+        </button>
       <div style="
         text-align: center;
         margin-top: 30px;
@@ -444,6 +457,26 @@
             return;
           }
         };
+
+        // 🌚다크모드 토글 기능
+        const toggleButton = document.getElementById('toggleMode');
+        let isDarkMode = false;
+
+        toggleButton.addEventListener('click', () => {
+            if (!isDarkMode) {
+                // 다크모드 적용
+                document.documentElement.style.filter = "invert(100%) hue-rotate(180deg)";
+                document.documentElement.style.webkitFilter = "invert(100%) hue-rotate(180deg)";
+                toggleButton.innerHTML = '<i class="fas fa-sun"></i> 라이트모드';
+                isDarkMode = true;
+            } else {
+                // 라이트모드로 복귀
+                document.documentElement.style.filter = "none";
+                document.documentElement.style.webkitFilter = "none";
+                toggleButton.innerHTML = '<i class="fas fa-moon"></i> 다크모드';
+                isDarkMode = false;
+            }
+        });
       </script>
     </body>
 
